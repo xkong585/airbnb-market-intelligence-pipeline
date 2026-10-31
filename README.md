@@ -1,4 +1,17 @@
-# Airbnb Data Pipeline
+# Airbnb Market Intelligence Pipeline
+
+> **October 2026 quality upgrade:** [Reproducible QC slice](qc/README.md) ·
+> [Aggregate QC report](qc/reports/qc_report.html) · [Validation evidence](qc/evidence/).
+> Validated on two real San Francisco releases: 14,737 input rows, 15 quarantined
+> for missing minimum nights, 14,722 retained; 20 batch checks and 10 independent
+> metric reconciliations. Preserve snapshot-level denominators; advertised prices,
+> availability and provider occupancy/revenue estimates are not verified earnings
+> or realized demand. Original cloud/Tableau execution was not rerun for this upgrade.
+>
+> New DAG topology: `silver → validate_silver → gold → validate_gold → snowflake_ingest`.
+> Spark changes preserve Census sentinel semantics and snapshot/neighborhood host
+> grain. Cloud deployment still requires the original runtime and source files.
+
 
 ## Project participation
 

@@ -1,0 +1,40 @@
+[
+  {
+    "file": "listings_2026-09-14.csv.gz",
+    "url": "https://data.insideairbnb.com/united-states/ca/san-francisco/2026-09-14/data/listings.csv.gz",
+    "snapshot_date": "2026-09-14",
+    "source": "Inside Airbnb",
+    "license": "CC BY 4.0",
+    "sha256": "ed20a45c3281bdae3f89265132a9eef83b0b276b6a54bcb7a3bc1a6f98af0677",
+    "bytes": 3430292,
+    "downloaded_at_utc": "2026-10-31T19:21:44.943344+00:00"
+  },
+  {
+    "file": "listings_2026-06-14.csv.gz",
+    "url": "https://data.insideairbnb.com/united-states/ca/san-francisco/2026-06-14/data/listings.csv.gz",
+    "snapshot_date": "2026-06-14",
+    "source": "Inside Airbnb",
+    "license": "CC BY 4.0",
+    "sha256": "62568e919cbf19ec5a16b4f9a39f92af5825bf333ece898ed78188d794208793",
+    "bytes": 4016666,
+    "downloaded_at_utc": "2026-10-31T19:21:45.248259+00:00"
+  },
+  {
+    "file": "cb_2023_06_tract_500k.zip",
+    "url": "https://www2.census.gov/geo/tiger/GENZ2023/shp/cb_2023_06_tract_500k.zip",
+    "source": "US Census 2023 cartographic tract boundaries 1:500000",
+    "license": "US government data",
+    "sha256": "63afe6f8a9a10cee22dd8b2d9950b676909e9e9a0b3bd58703ea4fe9ee2107c4",
+    "bytes": 4290033,
+    "downloaded_at_utc": "2026-10-31T19:21:44.393291+00:00"
+  },
+  {
+    "file": "acsdt5y2023-b19013.dat",
+    "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2023/table-based-SF/data/5YRData/acsdt5y2023-b19013.dat",
+    "sha256": "c9007017b7bb29ba758c77612ec9a4a0b897a4ed931d527754629866f580a110",
+    "bytes": 17884943,
+    "downloaded_at_utc": "2026-10-31T19:23:40.019387+00:00",
+    "source": "US Census ACS 2023 5-year B19013 bulk table",
+    "license": "US government data"
+  }
+]

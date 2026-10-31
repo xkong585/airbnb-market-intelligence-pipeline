@@ -1,0 +1,14 @@
+{
+  "city":"san_francisco",
+  "snapshots":["2026-06-14","2026-09-14"],
+  "primary_key":["city","snapshot_date","id"],
+  "required":["id","host_id","latitude","longitude","room_type","price","minimum_nights","availability_365","last_scraped"],
+  "blocking":["missing_schema","duplicate_or_missing_id","invalid_availability","invalid_minimum_nights","scrape_quarter_mismatch","duplicate_tract","join_inflation","reconciliation_failure"],
+  "quarantine":["invalid_latitude_or_longitude","missing_minimum_nights"],
+  "warnings":["missing_price","price_parse_failure","missing_host_id","price_over_1000_USD","spatial_zero_or_multiple","ACS_unavailable"],
+  "price_currency":"USD",
+  "publication":"full-batch gate; no report or ready marker on failure; atomic per-partition replacement",
+  "census_vintage":2023,
+  "boundary_vintage":2023,
+  "geometry_precision":"generalized 1:500000 cartographic tracts"
+}

@@ -116,19 +116,29 @@ airbnb_listings = (
 # 5. Geospatial + income enrichment
 # ─────────────────────────────────────────
 def _load_acs(income_csv: str) -> DataFrame:
-    return (
+    acs = (
         spark.read.option("header", True).csv(income_csv)
         .filter(F.col("GEO_ID").startswith("1400000US"))
         .withColumn("tract_geoid",
             F.regexp_extract(F.col("GEO_ID"), r"US(\d{11})$", 1))
         .withColumn("median_income_str",
-            F.regexp_replace(F.col("B19013_001E"), r"[^0-9]", ""))
+            F.regexp_replace(F.trim(F.col("B19013_001E")), ",", ""))
         .withColumn("median_income",
-            F.when(F.col("median_income_str") == "", F.lit(None))
-             .otherwise(F.col("median_income_str").cast("double")))
-        .select("tract_geoid", "median_income")
+            F.when(
+                F.expr("try_cast(median_income_str as double)").between(0, 250000),
+                F.expr("try_cast(median_income_str as double)")
+            ).otherwise(F.lit(None)))
+        .withColumn("median_income_raw", F.col("B19013_001E"))
+        .withColumn("median_income_moe_raw", F.col("B19013_001M"))
+        .withColumn("median_income_moe",
+            F.when(F.expr("try_cast(B19013_001M as double)") >= 0,
+                   F.expr("try_cast(B19013_001M as double)")))
+        .select("tract_geoid", "median_income", "median_income_raw", "median_income_moe", "median_income_moe_raw")
         .filter(F.length("tract_geoid") == 11)
     )
+    if acs.groupBy("tract_geoid").count().filter(F.col("count") > 1).limit(1).count():
+        raise ValueError("Duplicate ACS tract key; cannot publish silver")
+    return acs
 
 
 def enrich_city(city: str) -> DataFrame:
@@ -167,7 +177,10 @@ def enrich_city(city: str) -> DataFrame:
 
     # Join ACS median income by tract GEOID
     acs = _load_acs(CITY_TO_INCOME_CSV[city])
-    return joined.join(acs, on="tract_geoid", how="left")
+    result = joined.join(acs, on="tract_geoid", how="left")
+    if result.count() != city_df.count():
+        raise ValueError(f"{city}: spatial or Census join inflated listings; publish blocked")
+    return result
 
 
 print("Enriching listings with tract geometry and ACS income ...")

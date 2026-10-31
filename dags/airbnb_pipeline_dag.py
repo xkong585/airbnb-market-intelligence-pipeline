@@ -78,5 +78,17 @@ with DAG(
         execution_timeout=timedelta(hours=1),
     )
 
+    # A nonzero validation exit prevents downstream publication (all_success default).
+    validate_silver = BashOperator(
+        task_id="validate_silver",
+        bash_command=f"{SPARK_SUBMIT} {SCRIPTS_DIR}/quality_gate.py --stage silver",
+        execution_timeout=timedelta(hours=1),
+    )
+    validate_gold = BashOperator(
+        task_id="validate_gold",
+        bash_command=f"{SPARK_SUBMIT} {SCRIPTS_DIR}/quality_gate.py --stage gold",
+        execution_timeout=timedelta(hours=1),
+    )
+
     # ── Dependencies ──────────────────────────────────────────────────────
-    silver >> gold >> snowflake_ingest
+    silver >> validate_silver >> gold >> validate_gold >> snowflake_ingest

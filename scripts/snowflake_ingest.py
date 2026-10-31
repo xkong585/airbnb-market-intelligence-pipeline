@@ -57,6 +57,8 @@ for table in TABLES:
         auto_create_table=True,
         overwrite=True,
     )
+    if not success or nrows != len(df):
+        raise RuntimeError(f"Incomplete Snowflake load for {table}: {nrows}/{len(df)} rows")
     print(f"  {nrows} rows loaded ({nchunks} chunks), success={success}")
 
 conn.close()
