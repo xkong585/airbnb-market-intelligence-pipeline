@@ -19,7 +19,7 @@ def test_duplicate_blocks(rows):
 def test_schema_blocks(rows):
     with pytest.raises(QualityError,match='schema'):clean_listings(rows.drop(columns='host_id'),'2026-09-14')
 
-@pytest.mark.parametrize('col,value',[('availability_365',366),('minimum_nights',0),('minimum_nights',1.5),('last_scraped','2025-01-01')])
+@pytest.mark.parametrize('col,value',[('availability_365',366),('minimum_nights',0),('minimum_nights',1.5),('minimum_nights','unknown'),('last_scraped','2025-01-01')])
 def test_bad_values_block(rows,col,value):
     rows[col]=rows[col].astype(object)
     rows.loc[0,col]=value

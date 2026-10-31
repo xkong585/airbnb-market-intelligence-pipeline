@@ -1,7 +1,7 @@
 {
   "status": "passed",
   "mode": "empty_raw_and_processed_directories; official downloads; full pipeline and tests",
-  "elapsed_seconds": 5.3,
+  "elapsed_seconds": 5.501,
   "tables": [
     {
       "table": "snapshot_metrics.csv",
@@ -26,8 +26,8 @@
   ],
   "clean_run_log": {
     "status": "passed",
-    "started_at_utc": "2026-10-31T19:29:23.636041+00:00",
-    "elapsed_seconds": 4.652,
+    "started_at_utc": "2026-10-31T19:31:40.328644+00:00",
+    "elapsed_seconds": 4.909,
     "snapshots": 2,
     "rows": 14722,
     "blocking_checks": 20,

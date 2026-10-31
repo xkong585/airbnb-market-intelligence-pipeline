@@ -67,7 +67,7 @@ def clean_listings(frame,snapshot):
         valid=d[col].notna() & np.isfinite(d[col]) & d[col].eq(d[col].round())
         valid &= d[col].between(0,365) if col=='availability_365' else d[col].ge(1)
         # Missing minimum-nights rows are explicitly quarantined after source review.
-        invalid = ~valid & (d[col].notna() if col=='minimum_nights' else True)
+        invalid = ~valid & (d[col+'_raw'].notna() if col=='minimum_nights' else True)
         if invalid.any():raise QualityError('Invalid '+col+'; publish blocked')
     scraped=pd.to_datetime(d.last_scraped,errors='coerce')
     if scraped.isna().any() or not scraped.dt.to_period('Q').eq(pd.Period(snapshot,freq='Q')).all():raise QualityError('Scrape date mismatch; publish blocked')
