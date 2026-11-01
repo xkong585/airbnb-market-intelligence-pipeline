@@ -1,0 +1,3 @@
+snapshot_date,listing_count,host_count,known_host_listing_count,largest_host_count,largest_host_share_known,mean_price_USD,price_available_n,mean_availability_365,quarantined,missing_price,price_parse_failure,scrape_date_min,scrape_date_max,missing_host,price_over_1000
+2026-06-14,7328,3496,7328,179,0.024426855895196508,413.9569500674763,5928,181.72721069868996,4,1400,0,2026-06-14,2026-06-22,0,384
+2026-09-14,7394,3485,7394,172,0.023262104408980255,462.2175475352113,5680,184.77197727887477,11,1714,0,2026-09-14,2026-09-14,0,467

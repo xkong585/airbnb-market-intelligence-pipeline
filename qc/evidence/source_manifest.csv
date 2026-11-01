@@ -1,0 +1,5 @@
+file,url,snapshot_date,source,license,sha256,bytes,downloaded_at_utc
+listings_2026-09-14.csv.gz,https://data.insideairbnb.com/united-states/ca/san-francisco/2026-09-14/data/listings.csv.gz,2026-09-14,Inside Airbnb,CC BY 4.0,ed20a45c3281bdae3f89265132a9eef83b0b276b6a54bcb7a3bc1a6f98af0677,3430292,2026-10-31T19:21:44.943344+00:00
+listings_2026-06-14.csv.gz,https://data.insideairbnb.com/united-states/ca/san-francisco/2026-06-14/data/listings.csv.gz,2026-06-14,Inside Airbnb,CC BY 4.0,62568e919cbf19ec5a16b4f9a39f92af5825bf333ece898ed78188d794208793,4016666,2026-10-31T19:21:45.248259+00:00
+cb_2023_06_tract_500k.zip,https://www2.census.gov/geo/tiger/GENZ2023/shp/cb_2023_06_tract_500k.zip,,US Census 2023 cartographic tract boundaries 1:500000,US government data,63afe6f8a9a10cee22dd8b2d9950b676909e9e9a0b3bd58703ea4fe9ee2107c4,4290033,2026-10-31T19:21:44.393291+00:00
+acsdt5y2023-b19013.dat,https://www2.census.gov/programs-surveys/acs/summary_file/2023/table-based-SF/data/5YRData/acsdt5y2023-b19013.dat,,US Census ACS 2023 5-year B19013 bulk table,US government data,c9007017b7bb29ba758c77612ec9a4a0b897a4ed931d527754629866f580a110,17884943,2026-10-31T19:23:40.019387+00:00

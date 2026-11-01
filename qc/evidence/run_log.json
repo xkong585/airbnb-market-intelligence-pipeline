@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "started_at_utc": "2026-11-01T06:44:15.702486+00:00",
+  "elapsed_seconds": 1.904,
+  "snapshots": 2,
+  "rows": 14722,
+  "blocking_checks": 20,
+  "reconciliations": 10
+}

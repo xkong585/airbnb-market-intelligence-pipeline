@@ -1,0 +1,158 @@
+┌─────────────────────────────────────┐
+│┌───────────────────────────────────┐│
+││    Query Profiling Information    ││
+│└───────────────────────────────────┘│
+└─────────────────────────────────────┘
+EXPLAIN ANALYZE SELECT snapshot_date,neighbourhood_cleansed,room_type,COUNT(*)::BIGINT listing_count,COUNT(price_cents)::BIGINT known_price_count,SUM(price_cents)::HUGEINT price_sum_cents,SUM(availability_365)::BIGINT available_days FROM source_listings WHERE snapshot_date='2026-09-14' AND room_type='Entire home/apt' GROUP BY 1,2,3 ORDER BY 1,2,3
+┌────────────────────────────────────────────────┐
+│┌──────────────────────────────────────────────┐│
+││              Total Time: 0.0005s             ││
+│└──────────────────────────────────────────────┘│
+└────────────────────────────────────────────────┘
+┌───────────────────────────┐
+│           QUERY           │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│      EXPLAIN_ANALYZE      │
+│    ────────────────────   │
+│           0 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│__internal_decompress_strin│
+│           g(#0)           │
+│             #1            │
+│__internal_decompress_strin│
+│           g(#2)           │
+│             #3            │
+│             #4            │
+│             #5            │
+│             #6            │
+│                           │
+│          36 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│          ORDER_BY         │
+│    ────────────────────   │
+│     snapshot_date ASC     │
+│ neighbourhood_cleansed ASC│
+│       room_type ASC       │
+│                           │
+│          36 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│__internal_compress_string_│
+│        uhugeint(#0)       │
+│             #1            │
+│__internal_compress_string_│
+│        uhugeint(#2)       │
+│             #3            │
+│             #4            │
+│             #5            │
+│             #6            │
+│                           │
+│          36 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│             0             │
+│             1             │
+│             2             │
+│       listing_count       │
+│     known_price_count     │
+│      price_sum_cents      │
+│       available_days      │
+│                           │
+│          36 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│__internal_decompress_strin│
+│           g(#0)           │
+│             #1            │
+│__internal_decompress_strin│
+│           g(#2)           │
+│             #3            │
+│             #4            │
+│             #5            │
+│             #6            │
+│                           │
+│          36 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│       HASH_GROUP_BY       │
+│    ────────────────────   │
+│          Groups:          │
+│             #0            │
+│             #1            │
+│             #2            │
+│                           │
+│        Aggregates:        │
+│        count_star()       │
+│         count(#3)         │
+│    sum_no_overflow(#4)    │
+│    sum_no_overflow(#5)    │
+│                           │
+│          36 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│       snapshot_date       │
+│   neighbourhood_cleansed  │
+│         room_type         │
+│        price_cents        │
+│        price_cents        │
+│      availability_365     │
+│                           │
+│         4,402 rows        │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│__internal_compress_string_│
+│        uhugeint(#0)       │
+│__internal_compress_string_│
+│        uhugeint(#1)       │
+│             #2            │
+│             #3            │
+│             #4            │
+│                           │
+│         4,402 rows        │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         TABLE_SCAN        │
+│    ────────────────────   │
+│           Table:          │
+│      source_listings      │
+│                           │
+│   Type: Sequential Scan   │
+│                           │
+│        Projections:       │
+│       snapshot_date       │
+│         room_type         │
+│   neighbourhood_cleansed  │
+│        price_cents        │
+│      availability_365     │
+│                           │
+│          Filters:         │
+│ snapshot_date='2026-09-14'│
+│room_type='Entire home/apt'│
+│                           │
+│         4,402 rows        │
+│          (0.00s)          │
+└───────────────────────────┘

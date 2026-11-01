@@ -57,22 +57,24 @@ fact_neighborhood_month.write \
 # fact_host_summary
 # =================================
 
-# Calculate listings per host
+# Each host portfolio is specific to city, snapshot and neighborhood.
+host_keys = ["city", "snapshot_date", "neighbourhood_cleansed"]
 host_listing_counts = (
-    df.groupBy("host_id")
+    df.filter(col("host_id").isNotNull())
+    .groupBy(*host_keys, "host_id")
     .agg(count_distinct("listing_id").alias("host_listing_count"))
 )
-
-df_host = df.join(host_listing_counts, on="host_id", how="left")
-
-fact_host_summary = (
-    df_host.groupBy("city", "neighbourhood_cleansed")
-    .agg(
-        count_distinct("host_id").alias("host_count"),
-        count_distinct("listing_id").alias("total_listings"),
-        avg("host_listing_count").alias("avg_listings_per_host"),
-        max("host_listing_count").alias("largest_host_size")
-    )
+host_rollup = host_listing_counts.groupBy(*host_keys).agg(
+    count_distinct("host_id").alias("host_count"),
+    sum("host_listing_count").alias("known_host_listing_count"),
+    avg("host_listing_count").alias("avg_listings_per_host"),
+    max("host_listing_count").alias("largest_host_size"),
+)
+all_listings = df.groupBy(*host_keys).agg(count_distinct("listing_id").alias("total_listings"))
+fact_host_summary = all_listings.join(host_rollup, host_keys, "left").withColumn(
+    "largest_host_share_known",
+    when(col("known_host_listing_count") > 0,
+         col("largest_host_size") / col("known_host_listing_count"))
 )
 
 fact_host_summary.write \
@@ -87,6 +89,7 @@ fact_host_summary.write \
 fact_listing_summary = (
     df.select(
         "listing_id",
+        "snapshot_date",
         "city",
         "neighbourhood_cleansed",
         "year",

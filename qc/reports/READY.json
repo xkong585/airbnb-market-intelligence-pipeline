@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "source_lock_sha256": "fa3652b9e4f4dfcab93d5f068027fd593c492b06de3723b95b70c2048b67a596",
+  "snapshots": [
+    "2026-06-14",
+    "2026-09-14"
+  ],
+  "sql_benchmark": {
+    "status": "passed",
+    "cases": 4,
+    "results_identical": true
+  }
+}

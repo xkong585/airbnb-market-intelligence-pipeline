@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "mode": "empty_raw_and_processed_directories; official downloads; full pipeline and tests",
+  "elapsed_seconds": 5.501,
+  "tables": [
+    {
+      "table": "snapshot_metrics.csv",
+      "identical": true,
+      "sha256": "3835de76660ee170902077b95b4a4a78274ffdd6b5cec15e9ce0886e2699feeb"
+    },
+    {
+      "table": "spatial_join_audit.csv",
+      "identical": true,
+      "sha256": "0b65ae3f86daa888b29f3574b12a9bb2a4d0817e1e673df0b12b5a436f7015a9"
+    },
+    {
+      "table": "census_join_audit.csv",
+      "identical": true,
+      "sha256": "48e31cdb8a8f22faf8bb9fb697334543c78e9dda699399984db1e99be95beced"
+    },
+    {
+      "table": "metric_reconciliation.csv",
+      "identical": true,
+      "sha256": "4244bd036a746cb6ac56c9ec6175434c3bc9650cc9fd99b02184857be2293e3f"
+    }
+  ],
+  "clean_run_log": {
+    "status": "passed",
+    "started_at_utc": "2026-10-31T19:31:40.328644+00:00",
+    "elapsed_seconds": 4.909,
+    "snapshots": 2,
+    "rows": 14722,
+    "blocking_checks": 20,
+    "reconciliations": 10
+  }
+}

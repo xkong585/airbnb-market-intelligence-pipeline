@@ -1,0 +1,121 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Airbnb Data Quality | San Francisco</title><style>
+    body{font:15px/1.7 system-ui;background:#f4f6ef;color:#183e3b;margin:0}main{max-width:1100px;margin:auto;padding:40px 24px}h1{font:48px Georgia;letter-spacing:-.03em}h2{font:28px Georgia}.eyebrow{text-transform:uppercase;letter-spacing:.15em;color:#007e78;font-size:12px}article{padding:25px;background:white;border:1px solid #d7dfd5;border-radius:8px;margin:20px 0;overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}td,th{text-align:left;border-bottom:1px solid #e1e8df;padding:12px}a{color:#007e78}.note{color:#62766c;font-size:13px}.pass{padding:6px 12px;background:#e0efdb;border-radius:20px;display:inline-block}img{max-width:100%}</style></head><body><main>
+    <span class="eyebrow">San Francisco · Quarterly QC · 2026 upgrade</span><h1>Reliable data before the dashboard.</h1><p>Two public listing snapshots, explicit Census provenance, and a publication gate that fails when integrity breaks.</p>
+    <span class="pass">Passed · 20 batch checks · 10 independent metric reconciliations</span>
+    <article><h2>Snapshot scorecard</h2><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Release</th>
+      <th>Retained listings</th>
+      <th>Hosts</th>
+      <th>Quarantined</th>
+      <th>Missing price</th>
+      <th>Advertised price mean (USD)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2026-06-14</td>
+      <td>7328</td>
+      <td>3496</td>
+      <td>4</td>
+      <td>1400</td>
+      <td>413.957</td>
+    </tr>
+    <tr>
+      <td>2026-09-14</td>
+      <td>7394</td>
+      <td>3485</td>
+      <td>11</td>
+      <td>1714</td>
+      <td>462.218</td>
+    </tr>
+  </tbody>
+</table><p class="note">Prices are advertised USD listing prices, not realized revenue. Availability is not occupancy. Counts are specific to each snapshot. Missing prices stay missing and are excluded only from the price mean. <a href="../evidence/snapshot_metrics.csv">Download complete metrics and scrape-date ranges</a>.</p></article>
+    <article><h2>Coverage changed; demand is not established.</h2><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>from</th>
+      <th>to</th>
+      <th>previous</th>
+      <th>current</th>
+      <th>continuing</th>
+      <th>newly_observed</th>
+      <th>no_longer_observed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2026-06-14</td>
+      <td>2026-09-14</td>
+      <td>7328</td>
+      <td>7394</td>
+      <td>6790</td>
+      <td>604</td>
+      <td>538</td>
+    </tr>
+  </tbody>
+</table><p class="note">Newly observed and no-longer-observed listings may reflect collection coverage or platform changes. These counts do not measure causal market growth or demand.</p></article>
+    <article><h2>Spatial joins retain an audit trail.</h2><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>snapshot_date</th>
+      <th>zero</th>
+      <th>one</th>
+      <th>multiple</th>
+      <th>input_rows</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2026-06-14</td>
+      <td>1</td>
+      <td>7327</td>
+      <td>0</td>
+      <td>7328</td>
+    </tr>
+    <tr>
+      <td>2026-09-14</td>
+      <td>1</td>
+      <td>7393</td>
+      <td>0</td>
+      <td>7394</td>
+    </tr>
+  </tbody>
+</table><img src="spatial_qc.png" alt="Aggregate tract-level listing counts and unmatched count by snapshot"><p class="note">Anonymized coordinates; approximate tract context. Generalized 2023 cartographic boundaries at 1:500,000. Multiple matches use lowest GEOID deterministically.</p></article>
+    <article><h2>Census income keeps its uncertainty.</h2><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>input_rows</th>
+      <th>output_rows</th>
+      <th>matched</th>
+      <th>unmatched</th>
+      <th>income_available</th>
+      <th>vintage</th>
+      <th>snapshot_date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>7328</td>
+      <td>7328</td>
+      <td>7327</td>
+      <td>1</td>
+      <td>7177</td>
+      <td>2023</td>
+      <td>2026-06-14</td>
+    </tr>
+    <tr>
+      <td>7394</td>
+      <td>7394</td>
+      <td>7393</td>
+      <td>1</td>
+      <td>7233</td>
+      <td>2023</td>
+      <td>2026-09-14</td>
+    </tr>
+  </tbody>
+</table><p class="note">ACS 2019-2023 five-year estimates in 2023 inflation-adjusted dollars, with 90% MOE. Regional income is not host income. Sentinel and top-coded values retain annotations and do not enter means as exact values.</p></article>
+    <article><h2>Reproducibility and scope</h2><p>Verified source hashes, one-to-one snapshot keys, explicit quarantine, atomic partition replacement, idempotent reruns, and independent SQLite metric reconciliation. Fault-injection tests intentionally block duplicates, invalid schema, bad dates, bad availability and duplicate Census keys.</p><p>The original collaborative Spark/Sedona/Airflow/Snowflake/Tableau project is retained with attribution. This local QC slice is new work. The original VM and Tableau workbook were not rerun in this environment.</p><p><a href="../evidence/qc_checks.csv">Batch checks</a> · <a href="../evidence/metric_reconciliation.csv">SQL reconciliation</a> · <a href="../evidence/source_manifest.csv">Sources and hashes</a> · <a href="../evidence/run_log.json">Run log</a> · <a href="../docs/boundary_policy.md">Boundary policy</a></p></article>
+    <p class="note">Sources: <a href="https://insideairbnb.com/get-the-data/">Inside Airbnb (CC BY 4.0)</a>, US Census ACS 2023 B19013 and 2023 cartographic tract boundaries. Data transformed for validation and aggregate reporting. Snapshot dates identify provider releases; the June release contains 1,620 rows scraped on June 22 and 5,712 on June 14, all in Q2. Exact scrape dates are preserved. Missing minimum-nights rows were quarantined after source review (4 in June, 11 in September); the original failed gate is retained as evidence. Raw/row-level records are excluded from Git.</p>
+    </main></body></html>
