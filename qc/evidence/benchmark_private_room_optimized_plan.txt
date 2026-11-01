@@ -1,0 +1,105 @@
+┌─────────────────────────────────────┐
+│┌───────────────────────────────────┐│
+││    Query Profiling Information    ││
+│└───────────────────────────────────┘│
+└─────────────────────────────────────┘
+EXPLAIN ANALYZE SELECT snapshot_date,neighbourhood_cleansed,room_type,listing_count,known_price_count,price_sum_cents,available_days FROM report_mart WHERE room_type='Private room' ORDER BY 1,2,3
+┌────────────────────────────────────────────────┐
+│┌──────────────────────────────────────────────┐│
+││              Total Time: 0.0002s             ││
+│└──────────────────────────────────────────────┘│
+└────────────────────────────────────────────────┘
+┌───────────────────────────┐
+│           QUERY           │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│      EXPLAIN_ANALYZE      │
+│    ────────────────────   │
+│           0 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│__internal_decompress_strin│
+│           g(#0)           │
+│             #1            │
+│__internal_decompress_strin│
+│           g(#2)           │
+│__internal_decompress_integ│
+│     ral_bigint(#3, 1)     │
+│__internal_decompress_integ│
+│     ral_bigint(#4, 0)     │
+│__internal_decompress_integ│
+│   ral_hugeint(#5, 4647)   │
+│__internal_decompress_integ│
+│     ral_bigint(#6, 0)     │
+│                           │
+│          72 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│          ORDER_BY         │
+│    ────────────────────   │
+│     snapshot_date ASC     │
+│ neighbourhood_cleansed ASC│
+│       room_type ASC       │
+│                           │
+│          72 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│__internal_compress_string_│
+│        uhugeint(#0)       │
+│             #1            │
+│__internal_compress_string_│
+│        uhugeint(#2)       │
+│__internal_compress_integra│
+│     l_usmallint(#3, 1)    │
+│__internal_compress_integra│
+│     l_usmallint(#4, 0)    │
+│__internal_compress_integra│
+│    l_uinteger(#5, 4647)   │
+│__internal_compress_integra│
+│     l_uinteger(#6, 0)     │
+│                           │
+│          72 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│       snapshot_date       │
+│   neighbourhood_cleansed  │
+│         room_type         │
+│       listing_count       │
+│     known_price_count     │
+│      price_sum_cents      │
+│       available_days      │
+│                           │
+│          72 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         TABLE_SCAN        │
+│    ────────────────────   │
+│     Table: report_mart    │
+│   Type: Sequential Scan   │
+│                           │
+│        Projections:       │
+│         room_type         │
+│       snapshot_date       │
+│   neighbourhood_cleansed  │
+│       listing_count       │
+│     known_price_count     │
+│      price_sum_cents      │
+│       available_days      │
+│                           │
+│          Filters:         │
+│  room_type='Private room' │
+│                           │
+│          72 rows          │
+│          (0.00s)          │
+└───────────────────────────┘

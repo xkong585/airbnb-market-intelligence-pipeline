@@ -7,3 +7,4 @@ pyproj==3.8.0
 pyogrio==0.13.0
 matplotlib==3.10.7
 pytest==8.4.2
+duckdb==1.4.1

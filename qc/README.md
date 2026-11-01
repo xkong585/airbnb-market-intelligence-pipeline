@@ -91,3 +91,9 @@ US Census Bureau 2019-2023 ACS five-year B19013, official table-based summary
 file. Boundaries: US Census Bureau 2023 cartographic tract file, California,
 1:500,000. Raw data is not redistributed here. Code license for the new `qc/`
 module is MIT; this does not change original team or data rights.
+
+## Measured SQL optimization
+
+The [benchmark report](reports/sql_benchmark.html) and [raw timings/plans](evidence/sql_benchmark.json) compare grouped scans of **14,722 actual cleaned San Francisco listings** against a **185-row materialized reporting mart**. All four query variants are checked for exact output equality, including missing prices. The benchmark runs DuckDB with one thread, three warmups and 31 interleaved repetitions; it records p50/p95, mart construction cost and break-even reuses. Price rollups use sum/count, never an average of subgroup averages.
+
+This is a local two-snapshot (June/September 2026) experiment, separate from the original four-city Spark/Snowflake pipeline. It does not establish production Snowflake latency. Timings vary by hardware; correctness, not a fixed speedup threshold, gates publication. `run_qc.sh` removes public readiness on any test, pipeline or benchmark failure.
